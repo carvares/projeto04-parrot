@@ -21,6 +21,7 @@ color: #75B79E;
     margin-right: auto;
     width: 872px;
     flex-wrap: wrap;
+    justify-content: center;
 
 
 }
@@ -37,4 +38,10 @@ color: #75B79E;
 .carta img{
     width: 100px;
     height: 100px;
+}
+.esconder{
+    display: none;
+}
+.mostrar{
+    display: block;
 }
