@@ -1,12 +1,11 @@
 let ndecartas;
 let qualcarta;
-const todasAsCartas = ["bobrossparrot", "explodyparrot","fiestaparrot","metalparrot","revertitparrot","tripletsparrot","unicornparrot","bobrossparrot", "explodyparrot","fiestaparrot","metalparrot","revertitparrot","tripletsparrot","unicornparrot"];
+const todasAsCartas = ["bobrossparrot", "explodyparrot","fiestaparrot","metalparrot","revertitparrot","tripletsparrot","unicornparrot"];
 
 const codigocartas = [];
 let codigopronto = "<!--...-->";
 
 function quantascartas(){
-ndecartas = prompt("com quantas cartas quer jogar?");
 while (ndecartas % 2 != 0 || ndecartas == 0 || ndecartas > 14 || ndecartas < 4 ){
     ndecartas = prompt("com quantas cartas quer jogar?");
 }
@@ -16,7 +15,7 @@ const nDeGifs = ndecartas / 2;
 
 
     const cartas = document.querySelector(".cartas");
-    for (i = 0; i < ndecartas; i++ ){
+    for (i = 0; i < nDeGifs; i++ ){
         let carta = "img/" +todasAsCartas[i]+".gif";
 
             
@@ -24,7 +23,7 @@ const nDeGifs = ndecartas / 2;
         const conteudoCartas = `
         <div class="carta"  >
 
-        <img src="img/front.png" class = "${carta}" alt="papagaiopng" id="${carta}"  onclick="virarcarta(this)">
+        <img src="img/front.png" class = "${carta}" alt="papagaiopng" id="${carta}"  onclick="clickarCarta(this)">
         </div>
         `;
         codigocartas[i] = conteudoCartas;
@@ -32,48 +31,58 @@ const nDeGifs = ndecartas / 2;
         
         codigopronto = codigopronto + codigocartas[i];
     }
-    cartas.innerHTML = codigopronto;
+    cartas.innerHTML = codigopronto + codigopronto;
    
     let contador = 0;
     let jogadas = [];
-function virarcarta(qualcarta){
-        
+    var primeiracarta ;
+    var segundacarta ;
+
+function clickarCarta(qualcarta){
+        if(jogadas.length < 2 ){
+
         contador = contador + 1;
         console.log(contador);
         console.log(jogadas);
-      
         jogadas.push(qualcarta.id); 
-        if (qualcarta.classList.contains("virada")){
-            qualcarta.classList.remove("virada");
-            qualcarta.setAttribute('src',"img/front.png");
-            qualcarta.setAttribute('onclick',"onclick='virarcarta(this)'")
-            contadordecartas();
-        }else {
-        desvirar(qualcarta);
+        
+        virarCarta(qualcarta);
         contadordecartas();
-        }
-
-
+    }       
 }
 function contadordecartas(){
     if (jogadas.length == 2){
+        if (jogadas[0] != jogadas[1]){
+        
+           setTimeout(desfazerSelecao, 2000);
+            
 
-
-
-        if (jogadas[0] == jogadas[1]){
-        console.log("acertou");
-        jogadas = [];
-
-
-    } else{
-        jogadas = [];
+        } else{
+            jogadas =[];}   
     }
     
-    }
 }
 
-function desvirar(qualcarta){
+function virarCarta(qualcarta){
     qualcarta.classList.add("virada");
     qualcarta.setAttribute('src',qualcarta.id);
-    qualcarta.setAttribute('onclick',"")
+    qualcarta.setAttribute('onclick',"") 
+}
+function resetararray(qualarray){
+    qualarray = [];
+    
+}
+function desfazerSelecao(){
+            primeiracarta = document.getElementById(jogadas[0]);
+            primeiracarta.classList.remove("virada");
+            primeiracarta.setAttribute('src',"img/front.png");
+            primeiracarta.setAttribute('onclick',"clickarCarta(this)");
+
+            segundacarta= document.getElementById(jogadas[1]);
+            segundacarta.classList.remove("virada");
+            segundacarta.setAttribute('src',"img/front.png");
+            segundacarta.setAttribute('onclick',"clickarCarta(this)");
+
+            jogadas = [];
+
 }
