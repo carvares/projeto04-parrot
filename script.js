@@ -1,52 +1,57 @@
-let ndecartas;
-let qualcarta;
-const todasAsCartas = ["bobrossparrot", "explodyparrot","fiestaparrot","metalparrot","revertitparrot","tripletsparrot","unicornparrot"];
+let nDeCartas;
+let qualCarta;
+const codigoCartas = [];
+let codigoPronto = [];
 
-const codigocartas = [];
-let codigopronto = "<!--...-->";
 
-function quantascartas(){
-while (ndecartas % 2 != 0 || ndecartas == 0 || ndecartas > 14 || ndecartas < 4 ){
-    ndecartas = prompt("com quantas cartas quer jogar?");
+
+const todasAsCartas = ["bobrossparrot", "explodyparrot","fiestaparrot","metalparrot","revertitparrot","tripletsparrot","unicornparrot","bobrossparrot", "explodyparrot","fiestaparrot","metalparrot","revertitparrot","tripletsparrot","unicornparrot"];
+
+function quantasCartas(){
+while (nDeCartas % 2 != 0 || nDeCartas == 0 || nDeCartas > 14 || nDeCartas < 4 ){
+    nDeCartas = prompt("com quantas cartas quer jogar?");
 }
 }
-quantascartas();
-const nDeGifs = ndecartas / 2;
+quantasCartas();
 
 
     const cartas = document.querySelector(".cartas");
-    for (i = 0; i < nDeGifs; i++ ){
+    for (i = 0; i < nDeCartas; i++ ){
         let carta = "img/" +todasAsCartas[i]+".gif";
 
             
     
-        const conteudoCartas = `
-        <div class="carta"  >
+        const conteudoCartas = `<div class="carta"  >
 
-        <img src="img/front.png" class = "${carta}" alt="papagaiopng" id="${carta}"  onclick="clickarCarta(this)">
-        </div>
-        `;
-        codigocartas[i] = conteudoCartas;
+        <img src="img/front.png" class = "${carta}" alt="${carta}" id="${i}"  onclick="clickar(this)">
+        </div>`;
+        codigoCartas[i] = conteudoCartas;
     
         
-        codigopronto = codigopronto + codigocartas[i];
+        codigoPronto.push(codigoCartas[i]);
+
+        
     }
-    cartas.innerHTML = codigopronto + codigopronto;
+    codigoPronto.sort(comparador);
+    cartas.innerHTML = codigoPronto;
    
     let contador = 0;
     let jogadas = [];
     var primeiracarta ;
     var segundacarta ;
-
-function clickarCarta(qualcarta){
+    var cartaSelecionada;
+    let cartasPosicao = [];
+function clickar(qualCarta){
         if(jogadas.length < 2 ){
 
         contador = contador + 1;
-        console.log(contador);
-        console.log(jogadas);
-        jogadas.push(qualcarta.id); 
+        jogadas.push(qualCarta.alt); 
+        cartasPosicao.push(qualCarta.id);
+
         
-        virarCarta(qualcarta);
+         
+        
+        virarCarta(qualCarta);
         contadordecartas();
     }       
 }
@@ -54,35 +59,45 @@ function contadordecartas(){
     if (jogadas.length == 2){
         if (jogadas[0] != jogadas[1]){
         
-           setTimeout(desfazerSelecao, 2000);
+           setTimeout(desfazerSelecao, 1000);
             
 
         } else{
-            jogadas =[];}   
+            nDeCartas -= 2;
+            if(nDeCartas == 0){
+                alert("Você ganhou em "+contador+" jogadas!")
+            }
+            jogadas =[];
+        cartasPosicao =[];
+    }   
     }
     
 }
 
-function virarCarta(qualcarta){
-    qualcarta.classList.add("virada");
-    qualcarta.setAttribute('src',qualcarta.id);
-    qualcarta.setAttribute('onclick',"") 
+function virarCarta(qualCarta){
+    qualCarta.classList.add("virada");
+    qualCarta.setAttribute('src',qualCarta.alt);
+    qualCarta.setAttribute('onclick',"") 
 }
-function resetararray(qualarray){
-    qualarray = [];
-    
-}
+
 function desfazerSelecao(){
-            primeiracarta = document.getElementById(jogadas[0]);
+            primeiracarta = document.getElementById(cartasPosicao[0]);
             primeiracarta.classList.remove("virada");
             primeiracarta.setAttribute('src',"img/front.png");
-            primeiracarta.setAttribute('onclick',"clickarCarta(this)");
+            primeiracarta.setAttribute('onclick',"clickar(this)");
 
-            segundacarta= document.getElementById(jogadas[1]);
+            segundacarta= document.getElementById(cartasPosicao[1]);
             segundacarta.classList.remove("virada");
             segundacarta.setAttribute('src',"img/front.png");
-            segundacarta.setAttribute('onclick',"clickarCarta(this)");
+            segundacarta.setAttribute('onclick',"clickar(this)");
 
             jogadas = [];
+            cartasPosicao = [];
+}
 
+
+
+// Esta função pode ficar separada do código acima, onde você preferir
+function comparador() { 
+	return Math.random() - 0.5; 
 }
