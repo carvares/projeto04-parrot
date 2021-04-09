@@ -81,15 +81,13 @@ function virarCarta(qualCarta){
 }
 
 function desfazerSelecao(){
-            primeiracarta = document.getElementById(cartasPosicao[0]);
-            primeiracarta.classList.remove("virada");
-            primeiracarta.setAttribute('src',"img/front.png");
-            primeiracarta.setAttribute('onclick',"clickar(this)");
+    for(let i = 0; i < 2; i++){ 
+        primeiracarta = document.getElementById(cartasPosicao[i]);
+        primeiracarta.classList.remove("virada");
+        primeiracarta.setAttribute('src',"img/front.png");
+        primeiracarta.setAttribute('onclick',"clickar(this)");
+    }
 
-            segundacarta= document.getElementById(cartasPosicao[1]);
-            segundacarta.classList.remove("virada");
-            segundacarta.setAttribute('src',"img/front.png");
-            segundacarta.setAttribute('onclick',"clickar(this)");
 
             jogadas = [];
             cartasPosicao = [];
