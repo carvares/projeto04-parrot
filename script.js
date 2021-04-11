@@ -13,17 +13,27 @@ while (nDeCartas % 2 != 0 || nDeCartas == 0 || nDeCartas > 14 || nDeCartas < 4 )
 }
 }
 quantasCartas();
+let nDeGifs = nDeCartas/2;
 
 
     const cartas = document.querySelector(".cartas");
-    for (i = 0; i < nDeCartas; i++ ){
+    for (i = 0; i < nDeGifs; i++ ){
         let carta = "img/" +todasAsCartas[i]+".gif";
 
             
     
-        const conteudoCartas = `<div class="carta"  >
+        let conteudoCartas = `<div class="carta"  >
 
         <img src="img/front.png" class = "${carta}" alt="${carta}" id="${i}"  onclick="clickar(this)">
+        </div>`;
+        codigoCartas[i] = conteudoCartas;
+    
+        
+        codigoPronto.push(codigoCartas[i]);
+
+        conteudoCartas = `<div class="carta"  >
+
+        <img src="img/front.png" class = "${carta}" alt="${carta}" id="${i + 7}"  onclick="clickar(this)">
         </div>`;
         codigoCartas[i] = conteudoCartas;
     
